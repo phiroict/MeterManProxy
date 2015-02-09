@@ -2,7 +2,7 @@ from flask import Flask
 import urllib
 import urllib.request
 import urllib.parse
-import sys
+import datetime
 
 app = Flask(__name__)
 
@@ -17,7 +17,7 @@ def catch_all(path):
 @app.route('/pvoutput/getstatus/<sysid>/<key>')
 def getStatus(sysid, key):
     url='http://pvoutput.org/service/r2/getstatus.jsp'
-    params = {'d': '20150209'}
+    params = {'d': datetime.date.today().strftime("%Y%m%d")}
     querystring = urllib.parse.urlencode(params)
     request = urllib.request.Request(url, data=querystring.encode('utf-8'), headers={'X-Pvoutput-Apikey':key, 'X-Pvoutput-SystemId': sysid})
     response = urllib.request.urlopen(request)
